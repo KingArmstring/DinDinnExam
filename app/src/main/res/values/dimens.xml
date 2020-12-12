@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="top_left_corner_radius">36dp</dimen>
+    <dimen name="top_right_corner_radius">36dp</dimen>
+    <dimen name="menu_card_radius">28dp</dimen>
+    <dimen name="item_title_size">36sp</dimen>
+    <dimen name="item_desc_size">18sp</dimen>
+    <dimen name="button_add_to_cart_corner_radius">28sp</dimen>
+
+</resources>

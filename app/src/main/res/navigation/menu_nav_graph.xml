@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/pizzaFragment"
-        android:name="com.kingarmstring.dindinnexam.ui.menu.PizzaFragment"
+        android:name="com.kingarmstring.dindinnexam.ui.menu.fragments.PizzaFragment"
         android:label="fragment_pizza"
         tools:layout="@layout/fragment_pizza" >
         <action
@@ -16,12 +16,14 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/menu_nav_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
         android:id="@+id/sushiFragment"
-        android:name="com.kingarmstring.dindinnexam.ui.menu.SushiFragment"
+        android:name="com.kingarmstring.dindinnexam.ui.menu.fragments.SushiFragment"
         android:label="fragment_sushi"
         tools:layout="@layout/fragment_sushi" >
         <action
@@ -30,28 +32,33 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"/>
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/menu_nav_graph"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_sushiFragment_to_drinksFragment"
             app:destination="@id/drinksFragment"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/menu_nav_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
         android:id="@+id/drinksFragment"
-        android:name="com.kingarmstring.dindinnexam.ui.menu.DrinksFragment"
+        android:name="com.kingarmstring.dindinnexam.ui.menu.fragments.DrinksFragment"
         android:label="fragment_drinks"
         tools:layout="@layout/fragment_drinks" >
         <action
             android:id="@+id/action_drinksFragment_to_sushiFragment"
             app:destination="@id/sushiFragment"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
-            />
+            app:popUpTo="@id/menu_nav_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

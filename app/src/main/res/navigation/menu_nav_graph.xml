@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu_nav_graph"
+    app:startDestination="@id/pizzaFragment">
+
+    <fragment
+        android:id="@+id/pizzaFragment"
+        android:name="com.kingarmstring.dindinnexam.ui.menu.PizzaFragment"
+        android:label="fragment_pizza"
+        tools:layout="@layout/fragment_pizza" >
+        <action
+            android:id="@+id/action_pizzaFragment_to_sushiFragment"
+            app:destination="@id/sushiFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/sushiFragment"
+        android:name="com.kingarmstring.dindinnexam.ui.menu.SushiFragment"
+        android:label="fragment_sushi"
+        tools:layout="@layout/fragment_sushi" >
+        <action
+            android:id="@+id/action_sushiFragment_to_pizzaFragment"
+            app:destination="@id/pizzaFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_sushiFragment_to_drinksFragment"
+            app:destination="@id/drinksFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/drinksFragment"
+        android:name="com.kingarmstring.dindinnexam.ui.menu.DrinksFragment"
+        android:label="fragment_drinks"
+        tools:layout="@layout/fragment_drinks" >
+        <action
+            android:id="@+id/action_drinksFragment_to_sushiFragment"
+            app:destination="@id/sushiFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            />
+    </fragment>
+</navigation>

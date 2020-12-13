@@ -9,6 +9,7 @@ import android.view.WindowInsets
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.kingarmstring.dindinnexam.R
 import com.kingarmstring.dindinnexam.ui.payment.PaymentActivity
@@ -18,13 +19,68 @@ class MenuActivity : AppCompatActivity() {
 
     var bottomSheetInitialHeight = 0
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+        setPager()
         setPaymentClickHandler()
         setupBottomSheet()
     }
+
+
+    private fun setPager() {
+        slider_pager.adapter = SliderPagerAdapter(layoutInflater)
+        slider_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageSelected(position: Int) {
+                setActiveDot(position)
+            }
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageScrollStateChanged(state: Int) {}
+        })
+        setDotsClickListeners()
+    }
+
+    private fun setDotsClickListeners() {
+        first_slide_dot.setOnClickListener {
+            selectFirstDot()
+            slider_pager.setCurrentItem(0, true)
+        }
+        second_slide_dot.setOnClickListener {
+            selectSecondDot()
+            slider_pager.setCurrentItem(1, true)
+        }
+        third_slide_dot.setOnClickListener {
+            selectThirdDot()
+            slider_pager.setCurrentItem(2, true)
+        }
+    }
+
+    private fun setActiveDot(position: Int) {
+        when (position) {
+            0 ->  selectFirstDot()
+            1 -> selectSecondDot()
+            2 -> selectThirdDot()
+        }
+    }
+
+    private fun selectThirdDot() {
+        first_slide_dot.setImageResource(R.drawable.not_selected_slider_dot_drawable)
+        second_slide_dot.setImageResource(R.drawable.not_selected_slider_dot_drawable)
+        third_slide_dot.setImageResource(R.drawable.selected_slider_dot_drawable)
+    }
+
+    private fun selectSecondDot() {
+        first_slide_dot.setImageResource(R.drawable.not_selected_slider_dot_drawable)
+        second_slide_dot.setImageResource(R.drawable.selected_slider_dot_drawable)
+        third_slide_dot.setImageResource(R.drawable.not_selected_slider_dot_drawable)
+    }
+
+    private fun selectFirstDot() {
+        first_slide_dot.setImageResource(R.drawable.selected_slider_dot_drawable)
+        second_slide_dot.setImageResource(R.drawable.not_selected_slider_dot_drawable)
+        third_slide_dot.setImageResource(R.drawable.not_selected_slider_dot_drawable)
+    }
+
 
     /**
      * Here we do two things:
@@ -77,4 +133,9 @@ Notes:
 1. Don't forget to add the number of items added to the cart on the FAB, easy task, yet easy to forget :/
 2. Remember to create dimes file and move all hard typed values to it.
 3. Prevent fragments from navigating if the bottomsheet is collapsed and enable it if not.
+ */
+
+//for slides:
+/*
+1. For each slide there is a different layout.
  */

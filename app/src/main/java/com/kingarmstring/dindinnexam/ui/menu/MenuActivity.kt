@@ -12,10 +12,11 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.kingarmstring.dindinnexam.R
+import com.kingarmstring.dindinnexam.ui.menu.contracts.MenuActivityContract
 import com.kingarmstring.dindinnexam.ui.payment.PaymentActivity
 import kotlinx.android.synthetic.main.activity_menu.*
 
-class MenuActivity : AppCompatActivity() {
+class MenuActivity : AppCompatActivity(), MenuActivityContract {
 
     var bottomSheetInitialHeight = 0
 
@@ -93,9 +94,7 @@ class MenuActivity : AppCompatActivity() {
         bottomSheetBehavior.peekHeight = bottomSheetInitialHeight
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                Log.d("KingArmstring", "onStateChanged: $newState")
-            }
+            override fun onStateChanged(bottomSheet: View, newState: Int) {}
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 if (slideOffset < .8) {
@@ -103,6 +102,9 @@ class MenuActivity : AppCompatActivity() {
                 }else {
                     imgbutton.visibility = View.GONE
                 }
+                if (slideOffset > .95) view_pager_container.visibility = View.INVISIBLE
+                else view_pager_container.visibility = View.VISIBLE
+
             }
         })
     }
@@ -126,16 +128,26 @@ class MenuActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
+
+    override fun handleButtonCount(count: Int) {
+        cart_count_text.text = count.toString()
+    }
 }
 
 /*
 Notes:
-1. Don't forget to add the number of items added to the cart on the FAB, easy task, yet easy to forget :/
+1. Don't forget to add the number of items added to the cart on the FAB, easy task, yet easy to
+forget :/
 2. Remember to create dimes file and move all hard typed values to it.
 3. Prevent fragments from navigating if the bottomsheet is collapsed and enable it if not.
+4. Add offline mode, this mode will require me to ship some images in the drawable folder.
+5. In the repository I will make filtration before returning any results but in real life app, I
+will expect that there is an option to send a query text in the request to allow me to only fetch
+MenuItems with for example type pizza, sushi or drink
+6. Write a comment on the directory structure.
+7. don't forget to dispose the observable.
  */
 
-//for slides:
-/*
-1. For each slide there is a different layout.
- */
+//need glide instance in the recyclerView to load images.
+//need to listen to button clicks and touches through a callback.
+//need to change the corners of the list to sharp edges when expanded

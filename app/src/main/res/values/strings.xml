@@ -4,4 +4,5 @@
     <string name="text_cart_delivery_is_free">Delivery is free.</string>
     <string name="text_cart_value">Value: </string>
     <string name="text_cart_total_price_placeholder">Total price</string>
+    <string name="btn_added_text">added + 1</string>
 </resources>

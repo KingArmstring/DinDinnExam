@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/view_pager_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/darker_gray">
@@ -21,8 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.menu.MenuActivity"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        >
         <LinearLayout
             android:id="@+id/imgbutton"
             android:layout_width="70dp"
@@ -66,18 +67,37 @@
             app:defaultNavHost="true"
             android:background="@drawable/curved_top_corners_background"/>
 
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/menu_fab_id"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="30dp"
-            android:backgroundTint="@android:color/white"
-            android:src="@drawable/ic_shopping_cart"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true">
 
+            <ImageButton
+                android:id="@+id/menu_fab_id"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/move_to_cart_button_drawable"
+                android:src="@drawable/ic_shopping_cart"
+                />
+            <TextView
+                android:id="@+id/cart_count_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/menu_fab_id"
+                android:layout_alignEnd="@id/menu_fab_id"
+                android:text="10"
+                android:textColor="#FFF"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:gravity="center"
+                android:background="@drawable/cart_count_background_drawable"/>
+
+        </RelativeLayout>
     </RelativeLayout>
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

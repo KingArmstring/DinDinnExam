@@ -39,7 +39,6 @@ class SushiFragment : BaseMvRxFragment(), View.OnTouchListener {
                 MotionEvent.ACTION_UP -> {
                     endHorizontalX = event.x
                     val deltaX = endHorizontalX - startHorizontalX
-                    Log.d("KingArmstring", "onTouch: $deltaX")
                     if (deltaX > 150) {
                         findNavController().navigate(R.id.action_sushiFragment_to_pizzaFragment)
                     } else if (deltaX < -150){

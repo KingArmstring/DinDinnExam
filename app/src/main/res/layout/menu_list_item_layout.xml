@@ -3,29 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="@dimen/menu_card_radius">
+    app:cardCornerRadius="@dimen/menu_card_radius"
+    android:layout_margin="15dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="20dp">
 
-        <ImageView
-            android:id="@+id/img"
+        <RelativeLayout
+            android:id="@+id/image_container"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@android:color/black"
-            />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/menu_item_image"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:src="@android:color/black"
+                android:background="@drawable/curved_top_corners_background"
+                />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:src="@drawable/image_trans_background"
+                />
+        </RelativeLayout>
+
 <!--        -->
         <TextView
             android:id="@+id/item_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img"
+            app:layout_constraintTop_toBottomOf="@+id/image_container"
             android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
             android:text="Item Name"
@@ -58,6 +72,7 @@
             app:layout_constraintTop_toBottomOf="@id/item_desc_text">
 
             <TextView
+                android:id="@+id/nutrition_facts_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".7"
@@ -74,6 +89,7 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:textColor="@android:color/white"
+                android:maxLines="1"
                 android:background="@drawable/button_add_to_cart_background_drawable"/>
 
         </LinearLayout>

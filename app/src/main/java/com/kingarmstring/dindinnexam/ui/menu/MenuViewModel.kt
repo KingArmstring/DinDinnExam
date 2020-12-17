@@ -66,9 +66,7 @@ class MenuViewModel @AssistedInject constructor(
     companion object : MvRxViewModelFactory<MenuViewModel, MenuState> {
         override fun create(viewModelContext: ViewModelContext,
                             state: MenuState): MenuViewModel {
-//            return MenuViewModel(state, MenuRepository(), viewModelContext.activity)
-            return (viewModelContext as FragmentViewModelContext)
-                .fragment<PizzaFragment>().viewModelFactory.create(state)
+            return (viewModelContext.activity as MenuActivity).viewModelFactory.create(state)
         }
     }
 }

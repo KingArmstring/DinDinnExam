@@ -23,17 +23,11 @@ import javax.inject.Inject
 
 class MenuActivity : AppCompatActivity(), MenuActivityContract, HasSupportFragmentInjector {
 
-
-
-//    @set:Inject
-//    internal var supportFragmentInjector: DispatchingAndroidInjector<Fragment>? = null
-//
-//    override fun supportFragmentInjector(): AndroidInjector<Fragment>? {
-//        return supportFragmentInjector
-//    }
-
     @Inject
     lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
+
+    @Inject
+    lateinit var viewModelFactory: MenuViewModel.Factory
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector
 

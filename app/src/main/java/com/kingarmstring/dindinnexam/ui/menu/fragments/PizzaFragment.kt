@@ -44,7 +44,7 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
 
     lateinit var glideRequestManager: RequestManager
 
-    private val menuViewModel: MenuViewModel by fragmentViewModel()
+    private val menuViewModel: MenuViewModel by activityViewModel()
 
     @Inject
     lateinit var viewModelFactory: MenuViewModel.Factory

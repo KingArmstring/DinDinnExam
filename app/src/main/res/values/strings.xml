@@ -5,4 +5,10 @@
     <string name="text_cart_value">Value: </string>
     <string name="text_cart_total_price_placeholder">Total price</string>
     <string name="btn_added_text">added + 1</string>
+    <string name="text_pizza_header">Pizza</string>
+    <string name="text_sushi_header">Sushi</string>
+    <string name="text_drinks_header">Drinks</string>
+    <string name="filters_text">FILTERS</string>
+    <string name="text_spicy">Spicy</string>
+    <string name="text_vegan">Vegan</string>
 </resources>

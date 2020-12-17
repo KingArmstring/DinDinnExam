@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+<!--    I don't know how this layout behave? I mean when buttons are clicked,
+what is the visual effect as long as the logic effect as well.-->
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp">
+
+        <TextView
+            android:id="@+id/first_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="32sp"
+            android:gravity="start"
+            android:text="@string/text_pizza_header"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/second_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="26sp"
+            android:gravity="center"
+            android:text="@string/text_sushi_header"
+            android:textColor="@color/light_grey"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/third_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="26sp"
+            android:gravity="end"
+            android:text="@string/text_drinks_header"
+            android:textColor="@color/light_grey"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="25dp"
+        android:padding="2dp">
+        <TextView
+            android:id="@+id/filter_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="@string/filters_text"
+            android:textColor="@color/light_grey"
+            android:textStyle="bold"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="center"/>
+        <Button
+            android:id="@+id/button_spicy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_spicy"
+            android:textColor="@color/light_grey"
+            android:textAllCaps="false"
+            android:layout_marginEnd="5dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:layout_gravity="center"
+            android:background="@drawable/filters_button_drawable"/>
+
+        <Button
+            android:id="@+id/button_vegan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_vegan"
+            android:textColor="@color/light_grey"
+            android:textAllCaps="false"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:layout_gravity="center"
+            android:background="@drawable/filters_button_drawable"/>
+    </LinearLayout>
+</LinearLayout>

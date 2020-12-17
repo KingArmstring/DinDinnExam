@@ -28,6 +28,13 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+    sourceSets {
+        debug {
+            assets {
+                srcDirs 'src/debug/assets'
+            }
+        }
+    }
 }
 
 dependencies {
@@ -68,4 +75,8 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$http_logging_interceptor_version"
+
+    def glide_version = "4.11.0"
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 }

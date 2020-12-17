@@ -8,6 +8,7 @@
 
 <!--    Place holder colors: -->
     <color name="red">#F00</color>
-    <color name="green">#0F0</color>
+    <color name="green">#01C101</color>
     <color name="blue">#00F</color>
+    <color name="light_grey">#C6C6C6</color>
 </resources>

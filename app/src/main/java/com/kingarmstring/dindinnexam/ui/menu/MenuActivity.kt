@@ -6,15 +6,18 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.view.WindowInsets
-import android.widget.RelativeLayout
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.kingarmstring.dindinnexam.R
 import com.kingarmstring.dindinnexam.ui.menu.contracts.MenuActivityContract
 import com.kingarmstring.dindinnexam.ui.payment.PaymentActivity
 import kotlinx.android.synthetic.main.activity_menu.*
+import org.json.JSONArray
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.lang.StringBuilder
 
 class MenuActivity : AppCompatActivity(), MenuActivityContract {
 
@@ -23,11 +26,23 @@ class MenuActivity : AppCompatActivity(), MenuActivityContract {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+        setFullScreen()
         setPager()
         setPaymentClickHandler()
         setupBottomSheet()
     }
 
+    private fun setFullScreen() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        }
+        else if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.R) {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN, // FLAG_FULLSCREEN is deprecated only
+                WindowManager.LayoutParams.FLAG_FULLSCREEN  // starting from Android R but still valid before R
+            )
+        }
+    }
 
     private fun setPager() {
         slider_pager.adapter = SliderPagerAdapter(layoutInflater)
@@ -35,7 +50,14 @@ class MenuActivity : AppCompatActivity(), MenuActivityContract {
             override fun onPageSelected(position: Int) {
                 setActiveDot(position)
             }
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
+
             override fun onPageScrollStateChanged(state: Int) {}
         })
         setDotsClickListeners()
@@ -58,7 +80,7 @@ class MenuActivity : AppCompatActivity(), MenuActivityContract {
 
     private fun setActiveDot(position: Int) {
         when (position) {
-            0 ->  selectFirstDot()
+            0 -> selectFirstDot()
             1 -> selectSecondDot()
             2 -> selectThirdDot()
         }
@@ -94,13 +116,17 @@ class MenuActivity : AppCompatActivity(), MenuActivityContract {
         bottomSheetBehavior.peekHeight = bottomSheetInitialHeight
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {}
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    slide_indicator.visibility = View.GONE
+                }
+            }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 if (slideOffset < .8) {
-                    imgbutton.visibility = View.VISIBLE
-                }else {
-                    imgbutton.visibility = View.GONE
+                    slide_indicator.visibility = View.VISIBLE
+                } else if (slideOffset < .99){
+                    slide_indicator.visibility = View.INVISIBLE
                 }
                 if (slideOffset > .95) view_pager_container.visibility = View.INVISIBLE
                 else view_pager_container.visibility = View.VISIBLE
@@ -130,14 +156,13 @@ class MenuActivity : AppCompatActivity(), MenuActivityContract {
     }
 
     override fun handleButtonCount(count: Int) {
+        Log.d("KingArmstring", "coming here with new count: $count")
         cart_count_text.text = count.toString()
     }
 }
 
 /*
 Notes:
-1. Don't forget to add the number of items added to the cart on the FAB, easy task, yet easy to
-forget :/
 2. Remember to create dimes file and move all hard typed values to it.
 3. Prevent fragments from navigating if the bottomsheet is collapsed and enable it if not.
 4. Add offline mode, this mode will require me to ship some images in the drawable folder.

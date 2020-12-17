@@ -7,5 +7,5 @@ import com.kingarmstring.dindinnexam.models.MenuItem
 
 data class MenuState(
     val pizzas: Async<List<MenuItem>> = Uninitialized,
-    val addedPizzas: Async<MutableList<MenuItem>> = Uninitialized
+    val cartCount: Async<Int> = Uninitialized
 ) : MvRxState

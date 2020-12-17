@@ -10,6 +10,7 @@
         android:id="@+id/view_pager_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:background="@android:color/darker_gray">
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/slider_pager"
@@ -24,14 +25,17 @@
         tools:context=".ui.menu.MenuActivity"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         >
+<!--        -->
+
         <LinearLayout
-            android:id="@+id/imgbutton"
+            android:id="@+id/slide_indicator"
             android:layout_width="70dp"
             android:layout_height="10dp"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
             android:background="#00000000"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:animateLayoutChanges="true">
 
             <ImageView
                 android:id="@+id/first_slide_dot"
@@ -59,7 +63,7 @@
         </LinearLayout>
         <fragment
             android:id="@+id/menu_fragment_container"
-            android:layout_below="@+id/imgbutton"
+            android:layout_below="@+id/slide_indicator"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -68,32 +72,33 @@
             android:background="@drawable/curved_top_corners_background"/>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="30dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true">
 
+            <!--        I am using width and height of 56 since this is the default dimensions of the FAB        -->
             <ImageButton
                 android:id="@+id/menu_fab_id"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:background="@drawable/move_to_cart_button_drawable"
                 android:src="@drawable/ic_shopping_cart"
+                android:layout_centerInParent="true"
                 />
             <TextView
                 android:id="@+id/cart_count_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_alignTop="@id/menu_fab_id"
                 android:layout_alignEnd="@id/menu_fab_id"
-                android:text="10"
                 android:textColor="#FFF"
-                android:textSize="12sp"
+                android:textSize="8sp"
+                android:text="10"
                 android:textStyle="bold"
-                android:padding="5dp"
-                android:gravity="center"
+                android:gravity="center_horizontal|center_vertical"
                 android:background="@drawable/cart_count_background_drawable"/>
 
         </RelativeLayout>

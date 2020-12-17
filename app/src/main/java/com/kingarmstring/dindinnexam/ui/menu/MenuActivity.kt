@@ -14,6 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.kingarmstring.dindinnexam.R
 import com.kingarmstring.dindinnexam.ui.menu.contracts.MenuActivityContract
 import com.kingarmstring.dindinnexam.ui.payment.PaymentActivity
+import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -22,19 +23,24 @@ import javax.inject.Inject
 
 class MenuActivity : AppCompatActivity(), MenuActivityContract, HasSupportFragmentInjector {
 
+
+
+//    @set:Inject
+//    internal var supportFragmentInjector: DispatchingAndroidInjector<Fragment>? = null
+//
+//    override fun supportFragmentInjector(): AndroidInjector<Fragment>? {
+//        return supportFragmentInjector
+//    }
+
     @Inject
     lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
 
-    @Inject
-    lateinit var viewModelFactory: MenuViewModel.Factory
-
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return supportFragmentInjector
-    }
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector
 
     var bottomSheetInitialHeight = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         setFullScreen()

@@ -7,6 +7,7 @@ import com.airbnb.mvrx.*
 import com.kingarmstring.dindinnexam.appscope.DinDinnExamApp
 import com.kingarmstring.dindinnexam.models.MenuItem
 import com.kingarmstring.dindinnexam.repository.MenuRepository
+import com.kingarmstring.dindinnexam.ui.menu.fragments.PizzaFragment
 import com.kingarmstring.dindinnexam.ui.menu.state.MenuState
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
@@ -66,7 +67,8 @@ class MenuViewModel @AssistedInject constructor(
         override fun create(viewModelContext: ViewModelContext,
                             state: MenuState): MenuViewModel {
 //            return MenuViewModel(state, MenuRepository(), viewModelContext.activity)
-            return (viewModelContext.activity as MenuActivity).viewModelFactory.create(state)
+            return (viewModelContext as FragmentViewModelContext)
+                .fragment<PizzaFragment>().viewModelFactory.create(state)
         }
     }
 }

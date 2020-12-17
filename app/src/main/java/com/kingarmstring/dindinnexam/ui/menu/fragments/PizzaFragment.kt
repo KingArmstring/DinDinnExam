@@ -1,5 +1,6 @@
 package com.kingarmstring.dindinnexam.ui.menu.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -23,6 +24,7 @@ import com.kingarmstring.dindinnexam.ui.menu.MenuViewModel
 import com.kingarmstring.dindinnexam.ui.menu.contracts.MenuActivityContract
 import com.kingarmstring.dindinnexam.ui.menu.contracts.PizzaContract
 import com.kingarmstring.dindinnexam.utils.SpacingItemDecorator
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.fragment_pizza.*
 import org.json.JSONArray
@@ -39,10 +41,13 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
 
     @Inject
     lateinit var glideRequestOptions: RequestOptions
-    
+
     lateinit var glideRequestManager: RequestManager
 
-    private val menuViewModel: MenuViewModel by activityViewModel()
+    private val menuViewModel: MenuViewModel by fragmentViewModel()
+
+    @Inject
+    lateinit var viewModelFactory: MenuViewModel.Factory
 
     lateinit var adapter: MenuAdapter
 
@@ -52,6 +57,11 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_pizza, container, false)
+    }
+
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -191,3 +201,17 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
 //17. Handle process death.
 //18. Use shimmer facebook.
 //19. Remove kotlin-android-extensions plugin
+//20. Replace the header item by an empty MenuItem at the zeroth position.
+
+/*
+Now:
+0. Move all dependencies to
+1. Save config changes.
+2. Apply filter to get only pizzas
+3. Fill other lists.
+ */
+
+/*
+Later:
+1. Process death.
+ */

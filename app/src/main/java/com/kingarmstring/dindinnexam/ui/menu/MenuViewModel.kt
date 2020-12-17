@@ -5,12 +5,14 @@ import android.content.Context
 import android.util.Log
 import com.airbnb.mvrx.*
 import com.kingarmstring.dindinnexam.appscope.DinDinnExamApp
+import com.kingarmstring.dindinnexam.di.menu.MenuScope
 import com.kingarmstring.dindinnexam.models.MenuItem
 import com.kingarmstring.dindinnexam.repository.MenuRepository
 import com.kingarmstring.dindinnexam.ui.menu.fragments.PizzaFragment
 import com.kingarmstring.dindinnexam.ui.menu.state.MenuState
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import javax.inject.Singleton
 
 class MenuViewModel @AssistedInject constructor(
     @Assisted state: MenuState,
@@ -26,7 +28,7 @@ class MenuViewModel @AssistedInject constructor(
         }
     }
 
-    fun getPizzas(strResponse: String) = menuRepository.getPizzas(strResponse)
+    fun getPizzas() = menuRepository.getPizzas()
             .execute { pizzasState ->
                 copy(pizzas = pizzasState)
             }
@@ -49,11 +51,31 @@ class MenuViewModel @AssistedInject constructor(
     fun addItemToCart(menuItem: MenuItem, context: Context) {
         menuRepository.addToCart(menuItem, context).let { newCount ->
             var pizzas: List<MenuItem>
+            var recyclerViewIndex = 0
             withState {
                 pizzas = it.pizzas.invoke()!!.toMutableList()
+                recyclerViewIndex = it.recyclerViewIndex.invoke()?: 0
                 setState {
-                    copy(pizzas = Success(pizzas), cartCount = Success(newCount))
+                    copy(pizzas = Success(pizzas),
+                        cartCount = Success(newCount),
+                        recyclerViewIndex = Success(recyclerViewIndex))
                 }
+            }
+        }
+    }
+
+    fun setRecyclerViewIndex(index: Int) {
+        var pizzas: List<MenuItem>
+        var cartCount = 0
+        withState {
+            pizzas = it.pizzas.invoke()!!.toMutableList()
+            cartCount = it.cartCount.invoke() ?: 0
+            setState {
+                copy(
+                    pizzas = Success(pizzas),
+                    cartCount = Success(cartCount),
+                    recyclerViewIndex = Success(index)
+                )
             }
         }
     }

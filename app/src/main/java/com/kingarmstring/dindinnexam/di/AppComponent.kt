@@ -1,5 +1,6 @@
 package com.kingarmstring.dindinnexam.di
 
+import android.app.Application
 import android.content.Context
 import com.kingarmstring.dindinnexam.appscope.DinDinnExamApp
 import dagger.BindsInstance
@@ -15,7 +16,6 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidInjectionModule::class,
-        AppAssistedModule::class,
         ActivityBuildersModule::class,
         AppModule::class
     ]

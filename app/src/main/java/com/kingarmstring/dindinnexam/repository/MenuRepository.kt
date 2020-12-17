@@ -11,11 +11,11 @@ import org.json.JSONObject
 import java.io.*
 import javax.inject.Inject
 
-class MenuRepository @Inject constructor() {
+class MenuRepository @Inject constructor(val strResponse: String) {
 
 //    val
 
-    fun getPizzas(strResponse: String) = NetworkManager(strResponse).create()
+    fun getPizzas() = NetworkManager(strResponse).create()
         .getMenu("pizza")
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())

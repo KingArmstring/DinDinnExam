@@ -2,6 +2,7 @@ package com.kingarmstring.dindinnexam.ui.menu.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.*
 import com.bumptech.glide.Glide
@@ -32,22 +34,21 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.lang.StringBuilder
 import javax.inject.Inject
+import kotlin.math.abs
 
 class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
 
+    //these two variables are fo handling swiping via touch listener.
     var startHorizontalX: Float = 0.0f
     var endHorizontalX: Float = 0.0f
 
-
     @Inject
-    lateinit var glideRequestOptions: RequestOptions
-
     lateinit var glideRequestManager: RequestManager
-
-    private val menuViewModel: MenuViewModel by activityViewModel()
 
     @Inject
     lateinit var viewModelFactory: MenuViewModel.Factory
+
+    private val menuViewModel: MenuViewModel by activityViewModel()
 
     lateinit var adapter: MenuAdapter
 
@@ -59,29 +60,11 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
         return inflater.inflate(R.layout.fragment_pizza, container, false)
     }
 
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupGlide()
         setupPizzasList()
-        menuViewModel.getPizzas(getMenuItems())
-    }
-
-    fun getMenuItems(): String {
-        val inputStream = activity?.assets?.open("menu.json")
-        val builder = StringBuilder()
-        val reader = BufferedReader(InputStreamReader(inputStream))
-        var str = reader.readLine()
-        while (str != null) {
-            builder.append(str)
-            str = reader.readLine()
-        }
-        val jsonArray = JSONArray(builder.toString())
-        return jsonArray.toString()
+        // if savedInstanceState is not null, this means that it saved inside the state and method invalidate will be called and set the view automatically
+        if(savedInstanceState == null) menuViewModel.getPizzas()
     }
 
     override fun invalidate(): Unit = withState(menuViewModel) { menuState ->
@@ -98,6 +81,10 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
                 if (adapter.differ.currentList.size == 0)
                     adapter.notifyDataSetChanged()
                 adapter.submitList(menuState.pizzas.invoke())
+                menuState.recyclerViewIndex.invoke()?.let {
+                    if (abs(it-(recycler_view_menu.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()) > 1)
+                        recycler_view_menu.layoutManager!!.scrollToPosition(it)
+                }
             }
             is Fail -> {
                 //hide progressBar if any
@@ -115,7 +102,6 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
         if (menuState.cartCount is Success) {
             (activity as MenuActivityContract).handleButtonCount(menuState.cartCount.invoke())
         }
-
     }
 
     private fun setupPizzasList() {
@@ -127,12 +113,18 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
                     recycler_view_menu?.let {
                         if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                             recycler_view_menu.setOnTouchListener(null)
-                        }else if (newState == RecyclerView.SCROLL_STATE_IDLE ||
-                            newState == RecyclerView.SCROLL_STATE_SETTLING) {
+                        } else if (newState == RecyclerView.SCROLL_STATE_IDLE ||
+                            newState == RecyclerView.SCROLL_STATE_SETTLING
+                        ) {
                             recycler_view_menu.setOnTouchListener(this@PizzaFragment)
                         }
                     }
-
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        Log.d("KingArmstring", "SETTING RV STATE ${(recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()}")
+                        menuViewModel.setRecyclerViewIndex(
+                            (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                        )
+                    }
                 }
             })
             adapter = MenuAdapter( this, glideRequestManager)
@@ -142,22 +134,10 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
         }
     }
 
-    private fun setupGlide() {
-//        glideRequestOptions = RequestOptions
-//            .placeholderOf(R.drawable.default_image)
-//            .error(R.drawable.default_image)
-//            .transform(FitCenter(),
-//                GranularRoundedCorners(
-//                    28f,
-//                    28f,
-//                    0f,
-//                    0f
-//                ))
 
-        glideRequestManager = Glide.with(requireContext())
-            .setDefaultRequestOptions(glideRequestOptions)
+    override fun addToCartButtonClickCallback(pizza: MenuItem) {
+        menuViewModel.addItemToCart(pizza, requireContext())
     }
-
 
     override fun onTouch(view: View?, event: MotionEvent?): Boolean {
         event?.let {
@@ -183,8 +163,9 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
         return false
     }
 
-    override fun addToCartButtonClickCallback(pizza: MenuItem) {
-        menuViewModel.addItemToCart(pizza, requireContext())
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 }
 //6. When hiding the three dots at the top of the bottom sheet, try to make it smooth.
@@ -202,6 +183,9 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
 //18. Use shimmer facebook.
 //19. Remove kotlin-android-extensions plugin
 //20. Replace the header item by an empty MenuItem at the zeroth position.
+//21. Remove recyclerview ripples.
+//22. Make it work offline.
+//23. Replace all !! with ?.let
 
 /*
 Now:

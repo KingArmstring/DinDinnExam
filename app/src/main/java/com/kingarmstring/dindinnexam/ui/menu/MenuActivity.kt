@@ -40,7 +40,10 @@ class MenuActivity : AppCompatActivity(), MenuActivityContract, HasSupportFragme
         setFullScreen()
         setPager()
         setPaymentClickHandler()
-        setupBottomSheet()
+        savedInstanceState?.let { state ->
+            setupBottomSheet(state.getInt("BOTTOM_SHEET_STATE"))
+        } ?: setupBottomSheet()
+
     }
 
     private fun setFullScreen() {
@@ -121,9 +124,14 @@ class MenuActivity : AppCompatActivity(), MenuActivityContract, HasSupportFragme
      * 1. Set the initial height of the bottom sheet.
      * 2. Set the callback listener.
      */
-    private fun setupBottomSheet() {
+    private fun setupBottomSheet(state: Int = BottomSheetBehavior.STATE_COLLAPSED) {
         setBottomSheetHeight()
         val bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
+        if (state == BottomSheetBehavior.STATE_EXPANDED) {
+            slide_indicator.visibility = View.GONE
+            view_pager_container.visibility = View.INVISIBLE
+        }
+        bottomSheetBehavior.state = state
         bottomSheetBehavior.peekHeight = bottomSheetInitialHeight
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
@@ -168,6 +176,11 @@ class MenuActivity : AppCompatActivity(), MenuActivityContract, HasSupportFragme
 
     override fun handleButtonCount(count: Int) {
         cart_count_text.text = count.toString()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("BOTTOM_SHEET_STATE", BottomSheetBehavior.from(bottom_sheet).state)
     }
 
 }

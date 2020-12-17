@@ -8,9 +8,11 @@ import com.kingarmstring.dindinnexam.appscope.DinDinnExamApp
 import com.kingarmstring.dindinnexam.models.MenuItem
 import com.kingarmstring.dindinnexam.repository.MenuRepository
 import com.kingarmstring.dindinnexam.ui.menu.state.MenuState
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 
-class MenuViewModel(
-    state: MenuState,
+class MenuViewModel @AssistedInject constructor(
+    @Assisted state: MenuState,
     private val menuRepository: MenuRepository,
     context: Context
 ) : BaseMvRxViewModel<MenuState>(state, debugMode = true){
@@ -55,11 +57,16 @@ class MenuViewModel(
         }
     }
 
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(state: MenuState): MenuViewModel
+    }
+
     companion object : MvRxViewModelFactory<MenuViewModel, MenuState> {
         override fun create(viewModelContext: ViewModelContext,
                             state: MenuState): MenuViewModel {
-            val menuRepository = viewModelContext.app<DinDinnExamApp>().menuRepository
-            return MenuViewModel(state, menuRepository, viewModelContext.activity)
+//            return MenuViewModel(state, MenuRepository(), viewModelContext.activity)
+            return (viewModelContext.activity as MenuActivity).viewModelFactory.create(state)
         }
     }
 }

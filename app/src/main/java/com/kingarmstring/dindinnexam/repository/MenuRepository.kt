@@ -3,13 +3,15 @@ package com.kingarmstring.dindinnexam.repository
 import android.content.Context
 import com.kingarmstring.dindinnexam.models.MenuItem
 import com.kingarmstring.dindinnexam.network.NetworkManager
+import com.squareup.inject.assisted.AssistedInject
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
+import javax.inject.Inject
 
-class MenuRepository {
+class MenuRepository @Inject constructor() {
 
 //    val
 

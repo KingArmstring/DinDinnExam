@@ -29,12 +29,17 @@ import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.lang.StringBuilder
+import javax.inject.Inject
 
 class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
 
     var startHorizontalX: Float = 0.0f
     var endHorizontalX: Float = 0.0f
+
+
+    @Inject
     lateinit var glideRequestOptions: RequestOptions
+    
     lateinit var glideRequestManager: RequestManager
 
     private val menuViewModel: MenuViewModel by activityViewModel()
@@ -128,16 +133,16 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
     }
 
     private fun setupGlide() {
-        glideRequestOptions = RequestOptions
-            .placeholderOf(R.drawable.default_image)
-            .error(R.drawable.default_image)
-            .transform(FitCenter(),
-                GranularRoundedCorners(
-                    28f,
-                    28f,
-                    0f,
-                    0f
-                ))
+//        glideRequestOptions = RequestOptions
+//            .placeholderOf(R.drawable.default_image)
+//            .error(R.drawable.default_image)
+//            .transform(FitCenter(),
+//                GranularRoundedCorners(
+//                    28f,
+//                    28f,
+//                    0f,
+//                    0f
+//                ))
 
         glideRequestManager = Glide.with(requireContext())
             .setDefaultRequestOptions(glideRequestOptions)
@@ -185,3 +190,4 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
 //16. Add new menu item black button is not complete.
 //17. Handle process death.
 //18. Use shimmer facebook.
+//19. Remove kotlin-android-extensions plugin

@@ -8,18 +8,29 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.kingarmstring.dindinnexam.R
 import com.kingarmstring.dindinnexam.ui.menu.contracts.MenuActivityContract
 import com.kingarmstring.dindinnexam.ui.payment.PaymentActivity
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_menu.*
-import org.json.JSONArray
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.lang.StringBuilder
+import javax.inject.Inject
 
-class MenuActivity : AppCompatActivity(), MenuActivityContract {
+class MenuActivity : AppCompatActivity(), MenuActivityContract, HasSupportFragmentInjector {
+
+    @Inject
+    lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
+
+    @Inject
+    lateinit var viewModelFactory: MenuViewModel.Factory
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
+        return supportFragmentInjector
+    }
 
     var bottomSheetInitialHeight = 0
 
@@ -156,9 +167,9 @@ class MenuActivity : AppCompatActivity(), MenuActivityContract {
     }
 
     override fun handleButtonCount(count: Int) {
-        Log.d("KingArmstring", "coming here with new count: $count")
         cart_count_text.text = count.toString()
     }
+
 }
 
 /*

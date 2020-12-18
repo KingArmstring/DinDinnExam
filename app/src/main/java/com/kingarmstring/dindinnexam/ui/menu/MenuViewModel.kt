@@ -22,16 +22,17 @@ class MenuViewModel @AssistedInject constructor(
 
     init {
         val cartCount = menuRepository.getCartCount(context)
-        Log.d("KingArmstring", "cartCount: $cartCount")
         setState {
             copy(pizzas = Loading(), cartCount = Success(cartCount))
         }
     }
 
-    fun getPizzas() = menuRepository.getPizzas()
+    fun getPizzas() {
+        menuRepository.getPizzas()
             .execute { pizzasState ->
                 copy(pizzas = pizzasState)
             }
+    }
 
 //    fun getSushi() = menuRepository.getSushi()
 //        .execute { pizzasState ->
@@ -68,14 +69,16 @@ class MenuViewModel @AssistedInject constructor(
         var pizzas: List<MenuItem>
         var cartCount = 0
         withState {
-            pizzas = it.pizzas.invoke()!!.toMutableList()
-            cartCount = it.cartCount.invoke() ?: 0
-            setState {
-                copy(
-                    pizzas = Success(pizzas),
-                    cartCount = Success(cartCount),
-                    recyclerViewIndex = Success(index)
-                )
+            it.pizzas.invoke()?.let { pizzasList ->
+                pizzas = pizzasList.toMutableList()
+                cartCount = it.cartCount.invoke() ?: 0
+                setState {
+                    copy(
+                        pizzas = Success(pizzas),
+                        cartCount = Success(cartCount),
+                        recyclerViewIndex = Success(index)
+                    )
+                }
             }
         }
     }

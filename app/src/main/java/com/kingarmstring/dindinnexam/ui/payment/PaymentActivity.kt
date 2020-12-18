@@ -1,57 +1,47 @@
 package com.kingarmstring.dindinnexam.ui.payment
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.kingarmstring.dindinnexam.R
 import com.kingarmstring.dindinnexam.models.MenuItem
 import com.kingarmstring.dindinnexam.ui.menu.MenuActivity
+import com.kingarmstring.dindinnexam.ui.menu.MenuViewModel
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_payment.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
+import javax.inject.Inject
 
-class PaymentActivity : AppCompatActivity() {
+class PaymentActivity : AppCompatActivity(), HasSupportFragmentInjector {
+
+    @Inject
+    lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
+
+    @Inject
+    lateinit var viewModelFactory: PaymentViewModel.Factory
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
         setFabClickHandler()
-
-        val file = File(filesDir, "cart.json")
-        val fileReader = FileReader(file)
-        val bufferedReader = BufferedReader(fileReader)
-        val stringMenuItems = StringBuilder()
-        var line = bufferedReader.readLine()
-        while (line != null) {
-            stringMenuItems.append(line).append("\n")
-            line = bufferedReader.readLine()
-        }
-        bufferedReader.close()
-        val addedMenuItems = stringMenuItems.toString()
-        val jsonArray = JSONArray(addedMenuItems)
-        val addedItems = mutableListOf<MenuItem>()
-        for (i in 0 until jsonArray.length()) {
-            val jsonMenuItem = jsonArray[i] as JSONObject
-            val menuItem = MenuItem(
-                id = jsonMenuItem["id"] as Int,
-                imgUrl = jsonMenuItem["imgUrl"] as String,
-                name = jsonMenuItem["name"] as String,
-                desc = jsonMenuItem["desc"] as String,
-                nutritionFacts = jsonMenuItem["nutritionFacts"] as String,
-                price = (jsonMenuItem["price"] as Int).toFloat()
-            )
-            addedItems.add(menuItem)
-        }
-        val sb = StringBuilder()
-        for (i in 0 until addedItems.size) {
-            sb.append("${addedItems[i].id} -- ${addedItems[i].name}\n")
-        }
-        Log.d("KingArmstring", "items: $sb")
-        Toast.makeText(this, "$sb", Toast.LENGTH_SHORT).show()
+        setFullScreen()
     }
 
     private fun setFabClickHandler() {
@@ -60,4 +50,17 @@ class PaymentActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
+
+    private fun setFullScreen() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        }
+        else if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.R) {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN, // FLAG_FULLSCREEN is deprecated only
+                WindowManager.LayoutParams.FLAG_FULLSCREEN  // starting from Android R but still valid before R
+            )
+        }
+    }
+
 }

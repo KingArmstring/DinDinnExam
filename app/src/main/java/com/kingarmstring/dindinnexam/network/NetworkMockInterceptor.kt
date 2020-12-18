@@ -2,7 +2,6 @@ package com.kingarmstring.dindinnexam.network
 
 import android.util.Log
 import com.kingarmstring.dindinnexam.BuildConfig
-import com.kingarmstring.dindinnexam.fakeserver.FakeServer
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -19,9 +18,9 @@ class NetworkMockInterceptor(val strResponse: String) : Interceptor {
         if (uri.contains("menu")) {
             when(queryType) {
 //                "pizza" -> responseString = FakeServer.mockPizzaResponse()
-                "pizza" -> responseString = strResponse
-                "sushi" -> responseString = FakeServer.mockSushiResponse()
-                "drinks" -> responseString = FakeServer.mockDrinksResponse()
+                "pizza" -> responseString = strResponse // show hit different apis
+                "sushi" -> responseString = strResponse // show hit different apis
+                "drinks" -> responseString = strResponse // show hit different apis
             }
         }
 

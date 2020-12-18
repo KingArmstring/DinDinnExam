@@ -10,18 +10,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.*
-import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.bumptech.glide.load.resource.bitmap.FitCenter
-import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
-import com.bumptech.glide.request.RequestOptions
 
 import com.kingarmstring.dindinnexam.R
 import com.kingarmstring.dindinnexam.models.MenuItem
-import com.kingarmstring.dindinnexam.ui.menu.MenuAdapter
+import com.kingarmstring.dindinnexam.ui.menu.adapters.MenuAdapter
 import com.kingarmstring.dindinnexam.ui.menu.MenuViewModel
 import com.kingarmstring.dindinnexam.ui.menu.contracts.MenuActivityContract
 import com.kingarmstring.dindinnexam.ui.menu.contracts.PizzaContract
@@ -29,10 +24,6 @@ import com.kingarmstring.dindinnexam.utils.SpacingItemDecorator
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.fragment_pizza.*
-import org.json.JSONArray
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.lang.StringBuilder
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -120,7 +111,6 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
                         }
                     }
                     if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        Log.d("KingArmstring", "SETTING RV STATE ${(recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()}")
                         menuViewModel.setRecyclerViewIndex(
                             (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
                         )

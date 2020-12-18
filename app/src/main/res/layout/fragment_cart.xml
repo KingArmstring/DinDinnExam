@@ -1,90 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.payment.fragments.CartFragment">
-
-    <LinearLayout
-        android:id="@+id/cart_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_cart"
-            android:textSize="36sp"
-            android:gravity="center"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Orderes"
-            android:textSize="36sp"
-            android:gravity="center"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Info"
-            android:textSize="36sp"
-            android:gravity="center"
-            android:maxLines="1" />
-    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_cart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/cart_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"/>
 
-    <TextView
-        android:id="@+id/text_delivery_is_free"
+    <ProgressBar
+        android:id="@+id/payment_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_cart_delivery_is_free"
-        android:textColor="#CFCDCD"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_view_cart"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="20dp" />
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_delivery_is_free"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_cart_value"
-            android:textSize="14sp"
-            android:layout_marginStart="20dp"
-            android:gravity="center"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_cart_total_price_placeholder"
-            android:textSize="36sp"
-            android:gravity="center"
-            android:textColor="@android:color/black"/>
-    </LinearLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

@@ -2,6 +2,7 @@ package com.kingarmstring.dindinnexam.network
 
 
 import com.kingarmstring.dindinnexam.models.MenuItem
+import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -9,6 +10,12 @@ import retrofit2.http.Query
 interface DinDinnApi {
 
     /**
+     * In real life application, I will WRAP the List<MenuItem> inside a GenericApiResponse, I will
+     * include such a file to take a look on it and make sure I use it, but in such a small fake api
+     * no need for using it. NOTE this class I am talking about is copied from a google arch comp sample
+     * and not made by myself, although I can make it and it's easy, also copying from google samples
+     * is not a shame :D, please find this file in same directory this of this file (DinDinnApi file)
+     *
      *  // this simple request does not need authorization (like a token) because if I am a
      *  restaurant owner, I would want everyone to be able to see the menu, asking people to create
      *  accounts for that might push them to just leave the app and even worse uninstall it, but in
@@ -16,6 +23,7 @@ interface DinDinnApi {
      *  valid tokens only to access the application content.
      */
     @GET("menu")
-    fun getMenu(@Query("type") type: String) : Single<List<MenuItem>>
+    fun getMenu(@Query("type") type: String) : Observable<List<MenuItem>>
+
 
 }

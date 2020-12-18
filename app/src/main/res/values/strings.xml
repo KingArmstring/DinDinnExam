@@ -11,4 +11,8 @@
     <string name="filters_text">FILTERS</string>
     <string name="text_spicy">Spicy</string>
     <string name="text_vegan">Vegan</string>
+    <string name="final_price_placeholder">161 usd</string>
+    <string name="text_info">Info</string>
+    <string name="text_orders">Orders</string>
+    <string name="text_ios_menu_button"><![CDATA[< Menu]]></string>
 </resources>

@@ -1,24 +1,34 @@
 package com.kingarmstring.dindinnexam.repository
 
 import android.content.Context
+import android.util.Log
 import com.kingarmstring.dindinnexam.models.MenuItem
 import com.kingarmstring.dindinnexam.network.NetworkManager
-import com.squareup.inject.assisted.AssistedInject
+import com.kingarmstring.dindinnexam.utils.Constants
+import com.kingarmstring.dindinnexam.utils.Constants.Companion.BACKEND_FILE_CART
+import com.kingarmstring.dindinnexam.utils.Constants.Companion.RESPONSE_STRING
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
 import javax.inject.Inject
+import javax.inject.Named
 
-class MenuRepository @Inject constructor(val strResponse: String) {
+class MenuRepository @Inject constructor(@Named(RESPONSE_STRING) val menuResponse: String) {
 
-//    val
 
-    fun getPizzas() = NetworkManager(strResponse).create()
-        .getMenu("pizza")
+    fun getPizzas() = NetworkManager(menuResponse).create()
+        .getMenu(Constants.QUERY_NAME_PIZZA)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
+        .flatMap {
+            val pizzasList: List<MenuItem> = it.filter { menuItem ->
+                menuItem.type == Constants.QUERY_NAME_PIZZA
+            }
+            return@flatMap Observable.fromIterable(mutableListOf(pizzasList))
+        }
 
 //    fun getSushi() = NetworkManager().create()
 //        .getMenu("sushi")
@@ -46,12 +56,13 @@ class MenuRepository @Inject constructor(val strResponse: String) {
         jsonMenuItem.put("desc", menuItem.desc)
         jsonMenuItem.put("nutritionFacts", menuItem.nutritionFacts)
         jsonMenuItem.put("price", menuItem.price)
+        jsonMenuItem.put("type", menuItem.type)
 
         //add converted JSONObject to the JSONArray
         menuJSONArray.put(jsonMenuItem)
         val sizeOfCart = menuJSONArray.length()
         //add the updated JSONArray to the backend(using local file system to mock the backend)
-        val file = File(context.filesDir, "cart.json")
+        val file = File(context.filesDir, BACKEND_FILE_CART)
         val fileWrite = FileWriter(file)
         val bufferedWriter = BufferedWriter(fileWrite)
         bufferedWriter.write(menuJSONArray.toString())
@@ -61,7 +72,7 @@ class MenuRepository @Inject constructor(val strResponse: String) {
 
     private fun readJSONArrayFile(context: Context): String {
         return try {
-            val file = File(context.filesDir, "cart.json")
+            val file = File(context.filesDir, BACKEND_FILE_CART)
             val fileReader = FileReader(file)
             val bufferedReader = BufferedReader(fileReader)
             val stringMenuJSONArray = StringBuilder()

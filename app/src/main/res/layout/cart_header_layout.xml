@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    android:id="@+id/cart_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+        <TextView
+            android:id="@+id/ios_like_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_ios_menu_button"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"/>
+        <TextView
+            android:id="@+id/cart_header_first_text"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/txt_cart"
+            android:textSize="36sp"
+            android:layout_marginStart="25dp"
+            android:gravity="center"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/cart_header_second_text"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="@string/text_orders"
+        android:textSize="36sp"
+        android:gravity="center"
+        android:layout_gravity="bottom"/>
+
+    <TextView
+        android:id="@+id/cart_header_third_text"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="@string/text_info"
+        android:textSize="36sp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:layout_gravity="bottom"/>
+</LinearLayout>
+
+

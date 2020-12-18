@@ -8,6 +8,7 @@ import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.kingarmstring.dindinnexam.R
 import com.kingarmstring.dindinnexam.di.menu.MenuScope
+import com.kingarmstring.dindinnexam.utils.Constants
 import dagger.Module
 import dagger.Provides
 import org.json.JSONArray
@@ -17,7 +18,6 @@ import javax.inject.Singleton
 
 @Module
 class AppModule {
-
 
     @Singleton
     @Provides
@@ -32,8 +32,8 @@ class AppModule {
         .transform(
             FitCenter(),
             GranularRoundedCorners(
-                28f,
-                28f,
+                Constants.CURVED_MENU_CORNER,
+                Constants.CURVED_MENU_CORNER,
                 0f,
                 0f
             )

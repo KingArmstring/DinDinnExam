@@ -5,7 +5,8 @@
     "name": "pizza 1",
     "desc": "chicken, Peperoni, Tomatoes, BBQ sauce",
     "nutritionFacts": "190 grams, 40 cm",
-    "price": "12.0f"
+    "price": "12.0f",
+    "type": "pizza"
   },
   {
     "id": 1,
@@ -13,7 +14,8 @@
     "name": "pizza 2",
     "desc": "chicken, Peperoni, Tomatoes, BBQ sauce",
     "nutritionFacts": "190 grams, 40 cm",
-    "price": "12.0f"
+    "price": "12.0f",
+    "type": "pizza"
   },
   {
     "id": 2,
@@ -21,7 +23,8 @@
     "name": "pizza 3",
     "desc": "chicken, Peperoni, Tomatoes, BBQ sauce",
     "nutritionFacts": "190 grams, 40 cm",
-    "price": "12.0f"
+    "price": "12.0f",
+    "type": "pizza"
   },
   {
     "id": 3,
@@ -29,62 +32,79 @@
     "name": "pizza 4",
     "desc": "chicken, Peperoni, Tomatoes, BBQ sauce",
     "nutritionFacts": "190 grams, 40 cm",
-    "price": "12.0f"
+    "price": "12.0f",
+    "type": "pizza"
   },
   {
+    "id": 4,
     "imgUrl": "placeholder",
     "name": "sushi 1",
     "desc": "chicken, Peperoni, Tomatoes, BBQ sauce",
     "nutritionFacts": "190 grams, 40 cm",
-    "price": "12.0f"
+    "price": "12.0f",
+    "type": "sushi"
   },
   {
+    "id": 5,
     "imgUrl": "placeholder",
     "name": "sushi 2",
     "desc": "chicken, Peperoni, Tomatoes, BBQ sauce",
     "nutritionFacts": "190 grams, 40 cm",
-    "price": "12.0f"
+    "price": "12.0f",
+    "type": "sushi"
   },
   {
+    "id": 6,
     "imgUrl": "placeholder",
     "name": "sushi 3",
     "desc": "chicken, Peperoni, Tomatoes, BBQ sauce",
     "nutritionFacts": "190 grams, 40 cm",
-    "price": "12.0f"
+    "price": "12.0f",
+    "type": "sushi"
   },
   {
+    "id": 7,
     "imgUrl": "placeholder",
     "name": "sushi 4",
     "desc": "chicken, Peperoni, Tomatoes, BBQ sauce",
     "nutritionFacts": "190 grams, 40 cm",
-    "price": "12.0f"
+    "price": "12.0f",
+    "type": "sushi"
   },
   {
+    "id": 8,
     "imgUrl": "placeholder",
     "name": "drink 1",
     "desc": "chicken, Peperoni, Tomatoes, BBQ sauce",
     "nutritionFacts": "190 grams, 40 cm",
-    "price": "12.0f"
+    "price": "12.0f",
+    "type": "drink"
   },
   {
+    "id": 9,
     "imgUrl": "placeholder",
     "name": "drink 2",
     "desc": "chicken, Peperoni, Tomatoes, BBQ sauce",
     "nutritionFacts": "190 grams, 40 cm",
-    "price": "12.0f"
+    "price": "12.0f",
+    "type": "drink"
   },
   {
+    "id": 10,
     "imgUrl": "placeholder",
     "name": "drink 3",
     "desc": "chicken, Peperoni, Tomatoes, BBQ sauce",
     "nutritionFacts": "190 grams, 40 cm",
-    "price": "12.0f"
+    "price": "12.0f",
+    "type": "drink"
   },
   {
+    "id": 11,
     "imgUrl": "placeholder",
     "name": "drink 4",
     "desc": "chicken, Peperoni, Tomatoes, BBQ sauce",
     "nutritionFacts": "190 grams, 40 cm",
-    "price": "12.0f"
+    "price": "12.0f",
+    "type": "drink"
   }
 ]

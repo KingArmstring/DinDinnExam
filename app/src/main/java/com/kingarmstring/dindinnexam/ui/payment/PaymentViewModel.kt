@@ -27,14 +27,14 @@ class PaymentViewModel @AssistedInject constructor(
         }
     }
 
-    fun getCartItems(context: Context) = paymentRepository.getCartItems(context)
+    fun getCartItems(context: Context) = paymentRepository.getCartItems(context) // we can use execute from mvrx
         .execute {  state ->
             copy(cartItems = state)
         }
 
     fun removeItemFromCart(index: Int, context: Context) {
         paymentRepository.removeItemFromCart(index, context)
-            .subscribe(object : SingleObserver<List<MenuItem>> {
+            .subscribe(object : SingleObserver<List<MenuItem>> { // also we can use RxObserver like SingleObserver
                 override fun onSubscribe(d: Disposable) {
                     //should collect subscriptions and dispose them inside onDestroy in the fragment.
                 }

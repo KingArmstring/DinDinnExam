@@ -27,10 +27,10 @@ class MenuViewModel @AssistedInject constructor(
         }
     }
 
-    fun getPizzas() {
+    fun firePizzasEvent(context: Context) {
         menuRepository.getPizzas()
             .execute { pizzasState ->
-                copy(pizzas = pizzasState)
+                copy(pizzas = pizzasState, cartCount = Success(menuRepository.getCartCount(context)))
             }
     }
 
@@ -62,6 +62,12 @@ class MenuViewModel @AssistedInject constructor(
                         recyclerViewIndex = Success(recyclerViewIndex))
                 }
             }
+        }
+    }
+
+    fun setLoading() {
+        setState {
+            copy(pizzas = Loading())
         }
     }
 

@@ -55,7 +55,16 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
         super.onViewCreated(view, savedInstanceState)
         setupPizzasList()
         // if savedInstanceState is not null, this means that it saved inside the state and method invalidate will be called and set the view automatically
-        if(savedInstanceState == null) menuViewModel.getPizzas()
+        if(savedInstanceState == null) menuViewModel.firePizzasEvent(requireContext())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("KingArmstring", "onResume")
+        withState(menuViewModel) {
+            if (it.pizzas is Loading) menuViewModel.firePizzasEvent(requireContext())
+
+        }
     }
 
     override fun invalidate(): Unit = withState(menuViewModel) { menuState ->
@@ -156,6 +165,11 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        menuViewModel.setLoading()
     }
 }
 //6. When hiding the three dots at the top of the bottom sheet, try to make it smooth.

@@ -15,4 +15,13 @@
     <string name="text_info">Info</string>
     <string name="text_orders">Orders</string>
     <string name="text_ios_menu_button"><![CDATA[< Menu]]></string>
+    <string name="pizza_header_text">Pizza</string>
+    <string name="sushi_header_text">Sushi</string>
+    <string name="drinks_header_text">Drinks</string>
+    <string name="fab_button_proceed_to_cart">Proceed to cart</string>
+    <string name="text_checkout">checkout</string>
+    <string name="text_remove_item_from_cart">Remove item from cart</string>
+    <string name="information">INFORMATION</string>
+    <string name="orders">ORDERS</string>
+    <string name="sushi">SUSHI</string>
 </resources>

@@ -60,9 +60,9 @@ class MenuAdapter(
             holder.btnAddToCart(callback, differ.currentList[position-1])
             requestManager.load(Constants.getImage(position-1)).into(holder.menuItemImage)
         }else if (holder is MenuHeaderViewHolder){
-            holder.firstText.text = "Pizza"
-            holder.secondText.text = "Sushi"
-            holder.thirdText.text = "Drinks"
+            holder.firstText.text = holder.firstText.context.getString(R.string.pizza_header_text)
+            holder.secondText.text = holder.secondText.context.getString(R.string.sushi_header_text)
+            holder.thirdText.text = holder.thirdText.context.getString(R.string.drinks_header_text)
         }
     }
 

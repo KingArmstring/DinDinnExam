@@ -2,6 +2,9 @@ package com.kingarmstring.dindinnexam.network
 
 
 import com.kingarmstring.dindinnexam.models.MenuItem
+import com.kingarmstring.dindinnexam.utils.Constants
+import com.kingarmstring.dindinnexam.utils.Constants.Companion.MENU_END_POINT
+import com.kingarmstring.dindinnexam.utils.Constants.Companion.MENU_ITEM_TYPE
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -22,8 +25,8 @@ interface DinDinnApi {
      *  general in other situation we would want to add authorization field and allow users with
      *  valid tokens only to access the application content.
      */
-    @GET("menu")
-    fun getMenu(@Query("type") type: String) : Observable<List<MenuItem>>
+    @GET(MENU_END_POINT)
+    fun getMenu(@Query(MENU_ITEM_TYPE) type: String) : Observable<List<MenuItem>>
 
 
 }

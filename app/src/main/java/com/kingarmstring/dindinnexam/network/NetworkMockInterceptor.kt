@@ -2,6 +2,11 @@ package com.kingarmstring.dindinnexam.network
 
 import android.util.Log
 import com.kingarmstring.dindinnexam.BuildConfig
+import com.kingarmstring.dindinnexam.utils.Constants
+import com.kingarmstring.dindinnexam.utils.Constants.Companion.MENU_END_POINT
+import com.kingarmstring.dindinnexam.utils.Constants.Companion.MENU_ITEM_TYPE_DRINK
+import com.kingarmstring.dindinnexam.utils.Constants.Companion.MENU_ITEM_TYPE_PIZZA
+import com.kingarmstring.dindinnexam.utils.Constants.Companion.MENU_ITEM_TYPE_SUSHI
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -15,20 +20,13 @@ class NetworkMockInterceptor(val strResponse: String) : Interceptor {
         val uri = chain.request().url.toUri().toString()
         var responseString = ""
 
-        if (uri.contains("menu")) {
+        if (uri.contains(MENU_END_POINT)) {
             when(queryType) {
-//                "pizza" -> responseString = FakeServer.mockPizzaResponse()
-                "pizza" -> responseString = strResponse // show hit different apis
-                "sushi" -> responseString = strResponse // show hit different apis
-                "drinks" -> responseString = strResponse // show hit different apis
+                MENU_ITEM_TYPE_PIZZA -> responseString = strResponse // should hit different apis
+                MENU_ITEM_TYPE_SUSHI -> responseString = strResponse // should hit different apis
+                MENU_ITEM_TYPE_DRINK -> responseString = strResponse // should hit different apis
             }
         }
-
-        //no need to use logger interceptor, we can make our log ourselves, not to mention that
-        //httpLoggingInterceptor won't work unless we make http call which is not tha case here.
-//        if (BuildConfig.DEBUG) {
-//            Log.d("Network Mock Log", responseString)
-//        }
 
         return chain.proceed(chain.request())
             .newBuilder()

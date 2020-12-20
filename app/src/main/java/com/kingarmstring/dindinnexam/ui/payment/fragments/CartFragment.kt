@@ -62,16 +62,29 @@ class CartFragment : BaseMvRxFragment(), View.OnTouchListener, PaymentContract {
                     payment_progress_bar.visibility = View.VISIBLE
                 }
                 is Success -> {
-                    payment_progress_bar.visibility = View.GONE
-                    list.clear()
-                    list.addAll(state.cartItems.invoke())
-                    adapter.notifyDataSetChanged()
-                    recycler_view_cart.layoutManager?.scrollToPosition(0)
+                    if(state.itemRemoved is Uninitialized) {
+                        payment_progress_bar.visibility = View.GONE
+                        list.clear()
+                        list.add(MenuItem()) // adding extra item for the header
+                        list.addAll(state.cartItems.invoke())
+                        list.add(MenuItem()) // adding extra item for the footer
+                        adapter.notifyDataSetChanged()
+                        recycler_view_cart.layoutManager?.scrollToPosition(0)
+                    }
                 }
                 is Fail -> {
                     payment_progress_bar.visibility = View.GONE
                 }
                 is Uninitialized -> { }
+            }
+
+            if (state.itemRemoved is Success) {
+                payment_progress_bar.visibility = View.GONE
+                state.itemRemoved.invoke().getContentIfNotHandled()?.let { removedItemPosition ->
+                    list.removeAt(removedItemPosition)
+                    adapter.notifyItemRemoved(removedItemPosition+1)
+                    adapter.notifyItemRangeChanged(removedItemPosition+1, list.size)
+                }
             }
         }
     }
@@ -110,7 +123,6 @@ class CartFragment : BaseMvRxFragment(), View.OnTouchListener, PaymentContract {
     }
 
     override fun removeItemFromCart(index: Int) {
-        Log.d("KingArmstring", "removeItemFromCart callback: $index")
         paymentViewModel.removeItemFromCart(index, requireContext())
         //NOW after remove the item, I should just call method notifyItemRemoved on the callback of the state
     }

@@ -7,9 +7,8 @@ data class MenuItem(//maybe there should be an id in real life situation.
     val desc: String = "",
     val nutritionFacts: String = "",
     val price: Float = 0.0f,
-    val type: String
-) {
-
+    val type: String = ""
+)
 //    override fun equals(other: Any?): Boolean {
 //        try {
 //            return id == (other as MenuItem).id && name == other.name
@@ -17,4 +16,3 @@ data class MenuItem(//maybe there should be an id in real life situation.
 //            throw ClassCastException("otherMenuItem must be of type MenuItem")
 //        }
 //    }
-}

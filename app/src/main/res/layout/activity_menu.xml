@@ -43,7 +43,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/selected_slider_dot_drawable"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:id="@+id/second_slide_dot"
@@ -51,7 +52,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/not_selected_slider_dot_drawable"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:id="@+id/third_slide_dot"
@@ -59,7 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/not_selected_slider_dot_drawable"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
         <fragment
             android:id="@+id/menu_fragment_container"
@@ -87,7 +90,7 @@
                 android:background="@drawable/move_to_cart_button_drawable"
                 android:src="@drawable/ic_shopping_cart"
                 android:layout_centerInParent="true"
-                />
+                android:contentDescription="@string/fab_button_proceed_to_cart" />
             <TextView
                 android:id="@+id/cart_count_text"
                 android:layout_width="22dp"
@@ -96,10 +99,10 @@
                 android:layout_alignEnd="@id/menu_fab_id"
                 android:textColor="#FFF"
                 android:textSize="8sp"
-                android:text="10"
                 android:textStyle="bold"
                 android:gravity="center_horizontal|center_vertical"
-                android:background="@drawable/cart_count_background_drawable"/>
+                android:background="@drawable/cart_count_background_drawable"
+                tools:ignore="SmallSp" />
 
         </RelativeLayout>
     </RelativeLayout>

@@ -14,6 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.kingarmstring.dindinnexam.R
 import com.kingarmstring.dindinnexam.ui.menu.contracts.MenuActivityContract
 import com.kingarmstring.dindinnexam.ui.payment.PaymentActivity
+import com.kingarmstring.dindinnexam.utils.Constants.Companion.BOTTOM_SHEET_STATE
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -41,7 +42,7 @@ class MenuActivity : AppCompatActivity(), MenuActivityContract, HasSupportFragme
         setPager()
         setPaymentClickHandler()
         savedInstanceState?.let { state ->
-            setupBottomSheet(state.getInt("BOTTOM_SHEET_STATE"))
+            setupBottomSheet(state.getInt(BOTTOM_SHEET_STATE))
         } ?: setupBottomSheet()
 
     }
@@ -180,7 +181,7 @@ class MenuActivity : AppCompatActivity(), MenuActivityContract, HasSupportFragme
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt("BOTTOM_SHEET_STATE", BottomSheetBehavior.from(bottom_sheet).state)
+        outState.putInt(BOTTOM_SHEET_STATE, BottomSheetBehavior.from(bottom_sheet).state)
     }
 
 }

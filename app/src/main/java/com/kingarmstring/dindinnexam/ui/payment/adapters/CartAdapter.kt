@@ -56,10 +56,10 @@ class CartAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is CartViewHolder -> {
-                holder.itemName.text = list[position-1].name
-                holder.itemPrice.text = list[position-1].price.toString()
+                holder.itemName.text = list[position].name
+                holder.itemPrice.text = list[position].price.toString()
                 holder.btnRemoveFromCartClickHandler(callback, position-1)
-                requestManager.load(Constants.getImage(list[position-1].id)).into(holder.itemImage)
+                requestManager.load(Constants.getImage(list[position].id)).into(holder.itemImage)
             }
             is CartHeaderViewHolder -> {
                 //nothing should be done, static data holder
@@ -72,7 +72,8 @@ class CartAdapter(
         }
     }
 
-    override fun getItemCount() = list.size + 2
+    override fun getItemCount() = list.size
+
 
 
     class CartViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -84,7 +85,6 @@ class CartAdapter(
         fun btnRemoveFromCartClickHandler(callback: PaymentContract, index: Int) {
             button_cancel_item.setOnClickListener {
                 callback.removeItemFromCart(index)
-                Log.d("KingArmstring", "menuItem: $index")
             }
         }
     }
@@ -93,7 +93,7 @@ class CartAdapter(
         //in case I forgot, I need to replace the numbers with integer consts.
         return when (position) {
             0 -> 0
-            list.size + 1 -> 2
+            list.size - 1 -> 2
             else -> 1
         }
     }

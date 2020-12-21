@@ -17,20 +17,19 @@ import javax.inject.Singleton
 class MenuViewModel @AssistedInject constructor(
     @Assisted state: MenuState,
     private val menuRepository: MenuRepository,
-    context: Context
 ) : BaseMvRxViewModel<MenuState>(state, debugMode = true){
 
     init {
-        val cartCount = menuRepository.getCartCount(context)
+        val cartCount = menuRepository.getCartCount()
         setState {
             copy(pizzas = Loading(), cartCount = Success(cartCount))
         }
     }
 
-    fun firePizzasEvent(context: Context) {
+    fun firePizzasEvent() {
         menuRepository.getPizzas()
             .execute { pizzasState ->
-                copy(pizzas = pizzasState, cartCount = Success(menuRepository.getCartCount(context)))
+                copy(pizzas = pizzasState, cartCount = Success(menuRepository.getCartCount()))
             }
     }
 
@@ -49,12 +48,12 @@ class MenuViewModel @AssistedInject constructor(
 //            copy(addedMenuItems = pizzasState)
 //        }
 
-    fun addItemToCart(menuItem: MenuItem, context: Context) {
-        menuRepository.addToCart(menuItem, context).let { newCount ->
+    fun addItemToCart(menuItem: MenuItem) {
+        menuRepository.addToCart(menuItem).let { newCount ->
             var pizzas: List<MenuItem>
             var recyclerViewIndex = 0
             withState {
-                pizzas = it.pizzas.invoke()!!.toMutableList()
+                pizzas = it.pizzas.invoke()?.toMutableList() ?: mutableListOf()
                 recyclerViewIndex = it.recyclerViewIndex.invoke()?: 0
                 setState {
                     copy(pizzas = Success(pizzas),
@@ -101,8 +100,3 @@ class MenuViewModel @AssistedInject constructor(
         }
     }
 }
-//1. finish the add items to an external json file.
-//2. add dagger which will help you fix lot's of problems like injecting the context AND don't forget stop calling getPizzas in method onviewcraeted
-//3. fix all dirty work, clean code, collect strings in one file.
-//4. finish all remaining screen.
-//5. check process death.

@@ -3,14 +3,12 @@ package com.kingarmstring.dindinnexam.network
 import android.app.Application
 import android.content.Context
 import com.kingarmstring.dindinnexam.BuildConfig
-import okhttp3.CacheControl
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Response
+import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 class NetworkManager(val strResponse: String) {
@@ -19,7 +17,6 @@ class NetworkManager(val strResponse: String) {
         return Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
-            .client(provideHttpLoggingInterceptor())
             .client(provideMockClient())
             .baseUrl("https://dindinn.com/")
             .build()
@@ -35,6 +32,7 @@ class NetworkManager(val strResponse: String) {
      */
     private fun provideOfflineClient() = OkHttpClient.Builder().addInterceptor(OfflineInterceptor()).build()
 
+
     /**
      * Used it in debugging and debugging only, we can achive that using if BuildConfig.BEBUG
      * like shown below, but it won't be useful if data is not gotten via http, but since we
@@ -49,5 +47,28 @@ class NetworkManager(val strResponse: String) {
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
         }
         return OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build()
+    }
+
+    /**
+     * Usually when we have more than once interceptor, one for quick caching, one for network,
+     * ...etc, I collect them in one client and pass that client as the only client to the Retrofit
+     * builder
+     */
+    private fun provideOkHttpClient() : OkHttpClient {
+        return OkHttpClient
+            .Builder()
+            .cache(provideCache())
+            .addInterceptor(NetworkMockInterceptor(strResponse))
+            .addInterceptor(OfflineInterceptor())
+            .build()
+    }
+
+    /**
+     * Small cache object provider, we use that to tell retrofit how much memory do we need for
+     * caching, in this case it's 6 MB
+     */
+    fun provideCache() : Cache {
+        val cacheSize : Long = 6 * 1024 * 1046 // specifying 6 MB for caching.
+        return Cache(File("dindinn_exam_cache"), cacheSize)
     }
 }

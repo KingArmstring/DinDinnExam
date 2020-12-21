@@ -1,6 +1,5 @@
 package com.kingarmstring.dindinnexam.repository
 
-import android.content.Context
 import com.kingarmstring.dindinnexam.models.MenuItem
 import com.kingarmstring.dindinnexam.utils.Constants.Companion.BACKEND_FILE_CART
 import com.kingarmstring.dindinnexam.utils.Constants.Companion.MENU_ITEM_KEY_ID
@@ -16,12 +15,13 @@ import org.json.JSONObject
 import java.io.*
 import javax.inject.Inject
 
-class PaymentRepository @Inject constructor() {
+class PaymentRepository
+@Inject constructor(val filesDir: File) {
 
-    fun getCartItems(context: Context) : Single<List<MenuItem>> {
+    fun getCartItems(): Single<List<MenuItem>> {
         val addedItems: MutableList<MenuItem> = mutableListOf()
-        if (readCartJSONArrayFile(context).isNotEmpty()) {
-            val jsonArray = JSONArray(readCartJSONArrayFile(context))
+        if (readCartJSONArrayFile().isNotEmpty()) {
+            val jsonArray = JSONArray(readCartJSONArrayFile())
             for (i in 0 until jsonArray.length()) {
                 val jsonMenuItem = jsonArray[i] as JSONObject
                 val menuItem = MenuItem(
@@ -38,16 +38,11 @@ class PaymentRepository @Inject constructor() {
         }
 
         return Single.create { it.onSuccess(addedItems) }
-//        return Single.fromCallable {
-//            Thread.sleep(500)//fake delay
-//            addedItems.toList() }
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribeOn(Schedulers.io())
     }
 
-    fun removeItemFromCart(index: Int, context: Context): Single<List<MenuItem>> {
+    fun removeItemFromCart(index: Int): Single<List<MenuItem>> {
         //read the already existing JSONArray cart from file in form of String.
-        val oldCartString = readCartJSONArrayFile(context)
+        val oldCartString = readCartJSONArrayFile()
 
         //convert the old JSONArrayString into JSONArray
         val menuJSONArray: JSONArray
@@ -57,17 +52,17 @@ class PaymentRepository @Inject constructor() {
         //remove menuItem from the JSONArray
         menuJSONArray.remove(index)
         //add the updated JSONArray to the backend(using local file system to mock the backend)
-        val file = File(context.filesDir, BACKEND_FILE_CART)
+        val file = File(filesDir, BACKEND_FILE_CART)
         val fileWrite = FileWriter(file)
         val bufferedWriter = BufferedWriter(fileWrite)
         bufferedWriter.write(menuJSONArray.toString())
         bufferedWriter.close()
-        return getCartItems(context)
+        return getCartItems()
     }
 
-    private fun readCartJSONArrayFile(context: Context): String {
+    private fun readCartJSONArrayFile(): String {
         return try {
-            val file = File(context.filesDir, BACKEND_FILE_CART)
+            val file = File(filesDir, BACKEND_FILE_CART)
             val fileReader = FileReader(file)
             val bufferedReader = BufferedReader(fileReader)
             val stringMenuJSONArray = StringBuilder()

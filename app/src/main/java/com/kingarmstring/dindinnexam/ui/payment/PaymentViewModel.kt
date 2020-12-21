@@ -1,7 +1,5 @@
 package com.kingarmstring.dindinnexam.ui.payment
 
-import android.content.Context
-import android.util.Log
 import com.airbnb.mvrx.*
 import com.kingarmstring.dindinnexam.models.MenuItem
 import com.kingarmstring.dindinnexam.repository.PaymentRepository
@@ -9,12 +7,8 @@ import com.kingarmstring.dindinnexam.ui.payment.state.PaymentState
 import com.kingarmstring.dindinnexam.utils.Event
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-import io.reactivex.FlowableSubscriber
 import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import org.reactivestreams.Subscription
 
 class PaymentViewModel @AssistedInject constructor(
     @Assisted state: PaymentState,
@@ -27,13 +21,13 @@ class PaymentViewModel @AssistedInject constructor(
         }
     }
 
-    fun getCartItems(context: Context) = paymentRepository.getCartItems(context) // we can use execute from mvrx
+    fun getCartItems() = paymentRepository.getCartItems() // we can use execute from mvrx
         .execute {  state ->
             copy(cartItems = state)
         }
 
-    fun removeItemFromCart(index: Int, context: Context) {
-        paymentRepository.removeItemFromCart(index, context)
+    fun removeItemFromCart(index: Int) {
+        paymentRepository.removeItemFromCart(index)
             .subscribe(object : SingleObserver<List<MenuItem>> { // also we can use RxObserver like SingleObserver
                 override fun onSubscribe(d: Disposable) {
                     //should collect subscriptions and dispose them inside onDestroy in the fragment.

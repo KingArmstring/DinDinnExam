@@ -55,35 +55,32 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
         super.onViewCreated(view, savedInstanceState)
         setupPizzasList()
         // if savedInstanceState is not null, this means that it saved inside the state and method invalidate will be called and set the view automatically
-        if(savedInstanceState == null) menuViewModel.firePizzasEvent(requireContext())
+        if(savedInstanceState == null) menuViewModel.firePizzasEvent()
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("KingArmstring", "onResume")
         withState(menuViewModel) {
-            if (it.pizzas is Loading) menuViewModel.firePizzasEvent(requireContext())
-
+            if (it.pizzas is Loading) menuViewModel.firePizzasEvent()
         }
     }
 
     override fun invalidate(): Unit = withState(menuViewModel) { menuState ->
         when(menuState.pizzas) {
             is Loading -> {
-                // maybe show progressBar but did not see it in the design, but that's what I will
-                // be doing, showing a progressBar.
                 pizza_progress_bar.visibility = View.VISIBLE
             }
             is Success -> {
-                //hide progressBar if any
-                //populate the UI with data(recyclerView in this case)
                 pizza_progress_bar.visibility = View.GONE
                 if (adapter.differ.currentList.size == 0)
                     adapter.notifyDataSetChanged()
                 adapter.submitList(menuState.pizzas.invoke())
-                menuState.recyclerViewIndex.invoke()?.let {
-                    if (abs(it-(recycler_view_menu.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()) > 1)
-                        recycler_view_menu.layoutManager!!.scrollToPosition(it)
+                menuState.recyclerViewIndex.invoke()?.let { position ->
+                    if (abs(position-(recycler_view_menu.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()) > 1) {
+                        recycler_view_menu.layoutManager?.let { layoutManager ->
+                            layoutManager.scrollToPosition(position)
+                        }
+                    }
                 }
             }
             is Fail -> {
@@ -135,7 +132,7 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
 
 
     override fun addToCartButtonClickCallback(pizza: MenuItem) {
-        menuViewModel.addItemToCart(pizza, requireContext())
+        menuViewModel.addItemToCart(pizza)
     }
 
     override fun onTouch(view: View?, event: MotionEvent?): Boolean {
@@ -172,34 +169,3 @@ class PizzaFragment : BaseMvRxFragment(), View.OnTouchListener, PizzaContract {
         menuViewModel.setLoading()
     }
 }
-//6. When hiding the three dots at the top of the bottom sheet, try to make it smooth.
-//7. Add text to be shown when Fail
-//8. Collect all constants in one file.
-//9. Add methods comments.
-//10. Change the location of the ProgressBar to the center when the bottom sheet is expanded.
-//11. Create the network layer by adding the event and network wrapper around the returned response.
-//12. Add Error icon in the same place of the progressBar and show it when Fail, also make this view move to the center of the screen when the user expand the bottom sheet.
-//13. Images should come from server.
-//14. Set the limit of adding items to cart to 99.
-//15. Move the progressbar to the center of the screen when the bottomsheet gets expanded and top when collapsed.
-//16. Add new menu item black button is not complete.
-//17. Handle process death.
-//18. Use shimmer facebook.
-//19. Remove kotlin-android-extensions plugin
-//20. Replace the header item by an empty MenuItem at the zeroth position.
-//21. Remove recyclerview ripples.
-//22. Make it work offline.
-//23. Replace all !! with ?.let
-
-/*
-Now:
-0. Move all dependencies to
-1. Save config changes.
-2. Apply filter to get only pizzas
-3. Fill other lists.
- */
-
-/*
-Later:
-1. Process death.
- */

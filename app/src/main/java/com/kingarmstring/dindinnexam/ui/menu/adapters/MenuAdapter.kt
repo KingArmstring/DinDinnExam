@@ -56,7 +56,7 @@ class MenuAdapter(
             holder.tvItemName.text = differ.currentList[position-1].name
             holder.tvItemDesc.text = differ.currentList[position-1].desc
             holder.tvNutritionFacts.text = differ.currentList[position-1].nutritionFacts
-            holder.btnAddToCart.text = differ.currentList[position-1].price.toString()
+            "${differ.currentList[position-1].price.toInt()} usd".also { holder.btnAddToCart.text = it }
             holder.btnAddToCart(callback, differ.currentList[position-1])
             requestManager.load(Constants.getImage(position-1)).into(holder.menuItemImage)
         }else if (holder is MenuHeaderViewHolder){
@@ -95,7 +95,7 @@ class MenuAdapter(
                         btnAddToCart.text = btnAddToCart.context.getString(R.string.btn_added_text)
                     }
                     MotionEvent.ACTION_UP -> {
-                        btnAddToCart.text = pizza.price.toString()
+                        "${pizza.price.toInt()} usd".also { btnAddToCart.text = it }
                         btnAddToCart.background =
                             ContextCompat.getDrawable(
                                 btnAddToCart.context,
@@ -104,6 +104,7 @@ class MenuAdapter(
                     }
                     MotionEvent.ACTION_CANCEL -> {
                         btnAddToCart.text = pizza.price.toString()
+                        "${pizza.price.toInt()} usd".also { btnAddToCart.text = it }
                         btnAddToCart.background =
                             ContextCompat.getDrawable(
                                 btnAddToCart.context,

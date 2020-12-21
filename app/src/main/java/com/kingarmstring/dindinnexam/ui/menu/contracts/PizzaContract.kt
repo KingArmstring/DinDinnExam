@@ -6,5 +6,4 @@ interface PizzaContract {
 
     fun addToCartButtonClickCallback(pizza: MenuItem)
 
-
 }

@@ -13,6 +13,7 @@ import dagger.Module
 import dagger.Provides
 import org.json.JSONArray
 import java.io.BufferedReader
+import java.io.File
 import java.io.InputStreamReader
 import javax.inject.Singleton
 
@@ -38,4 +39,8 @@ class AppModule {
                 0f
             )
         )
+
+    @Singleton
+    @Provides
+    fun provideFileDir(context: Context) = context.filesDir
 }

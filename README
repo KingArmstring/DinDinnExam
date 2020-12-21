@@ -1,0 +1,31 @@
+Arch and design:
+
+1. Used MvRx, which is an arch made by airbnb built on MVI arch which is built using arch components ViewModel and LiveData: I personally think that MvRx is way less less than MVI, MVI is more customizable, I can show you how I use MVI in my projects if you want to, it uses the same concept of State and invalidation, it allows me to make everything myself in the customization I desire.
+
+2. Used  Dagger 2 for dependency injection, also used the help of Assisted Injection of Square to help me inject the ViewModel factory. I am also open to use any other DI lib like Hilt. In this mini app I created 3 scopes: AppScope, MenuScope and PaymentScope(I did not use the PaymentScope though but added it for consistency)
+
+3. Used navigation components and Navigation Graphs to make the screens of the application.
+
+4. Used also AsyncListDiffer (I did not need to do so but I used it in the Menu section just to show I make lists this way using AsyncListDiffer or ListAdapter) but to make it effective we need to design a good `equals` method in the model of the data being shown in the list.
+
+5. Designed a Retrofit api to return fake data, the design of data itself might not be the best but it’s enough for the purpose of this small app.
+
+6. Used file system management to save items in the cart in the form of json to mimic the act of backend PUT/POST apis.
+
+7. The application will survive process death and configuration change.
+
+8. When scrolling through the Menu and navigate to the cart and come back to Menu again, the user will find the same list position, meaning no need to scroll back to the position you were at before navigation to cart. Same will happen with screen rotation, if the user is at the menu position x in scrolling and the application rotates the user will not be scrolled back to position 0.
+
+9. Class Event, is a wrapper class used to hold data that we need to show only once for example if the user got an error due to any reason like network, we need to show the user the error only once, if we just wrap that error in a state or LiveData and the user changes configuration, the error will show up again which is not a desirable action of course.
+
+10. Usually in all of my projects I use GenericApiResponse (check the file ApiResponse) this wrapper class is recommended by Google and similar classes can be found in the Google Android Samples, it usually wraps what is being returned from Retrofit.
+
+11. I also used RxJava and used the Call converter to convert Retrofit Call objects to Rx objects, I can write an adapter to convert Call objects to LiveData as well, I know it’s easy but just for the record.
+
+12. I created lots of custom drawables and animations to be used through out the application.
+
+
+
+
+
+

@@ -1,6 +1,8 @@
 package com.kingarmstring.dindinnexam.di.menu
 
 import android.content.Context
+import com.kingarmstring.dindinnexam.network.DinDinnApi
+import com.kingarmstring.dindinnexam.network.NetworkManager
 import com.kingarmstring.dindinnexam.utils.Constants.Companion.BACKEND_FILE_MENU
 import com.kingarmstring.dindinnexam.utils.Constants.Companion.RESPONSE_STRING
 import dagger.Module
@@ -30,5 +32,14 @@ class MenuModule {
         val jsonArray = JSONArray(builder.toString())
         return jsonArray.toString()
     }
+
+    /**
+     * dinDinnApi is needed in only one scope(menu scope)
+     */
+    @MenuScope
+    @Provides
+    fun provideDinDinnApi(@Named(RESPONSE_STRING) menuResponse: String) : DinDinnApi=
+        NetworkManager(menuResponse).create()
+
 
 }

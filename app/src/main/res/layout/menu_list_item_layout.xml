@@ -75,7 +75,8 @@
                 android:paddingEnd="20dp"
                 android:textColor="@android:color/white"
                 android:maxLines="1"
-                android:background="@drawable/button_add_to_cart_background_unpressed"/>
+                android:background="@drawable/button_add_to_cart_background_unpressed"
+                android:textAllCaps="false"/>
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

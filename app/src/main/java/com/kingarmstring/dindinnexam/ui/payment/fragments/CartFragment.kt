@@ -2,7 +2,6 @@ package com.kingarmstring.dindinnexam.ui.payment.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -13,7 +12,6 @@ import com.airbnb.mvrx.*
 import com.bumptech.glide.RequestManager
 import com.kingarmstring.dindinnexam.R
 import com.kingarmstring.dindinnexam.models.MenuItem
-import com.kingarmstring.dindinnexam.ui.menu.adapters.MenuAdapter
 import com.kingarmstring.dindinnexam.ui.payment.PaymentViewModel
 import com.kingarmstring.dindinnexam.ui.payment.adapters.CartAdapter
 import com.kingarmstring.dindinnexam.ui.payment.contracts.PaymentContract
@@ -52,7 +50,7 @@ class CartFragment : BaseMvRxFragment(), View.OnTouchListener, PaymentContract {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setCartItemsList()
-        if (savedInstanceState == null) paymentViewModel.getCartItems(requireContext())
+        if (savedInstanceState == null) paymentViewModel.getCartItems()
     }
 
     override fun invalidate() {
@@ -123,7 +121,7 @@ class CartFragment : BaseMvRxFragment(), View.OnTouchListener, PaymentContract {
     }
 
     override fun removeItemFromCart(index: Int) {
-        paymentViewModel.removeItemFromCart(index, requireContext())
+        paymentViewModel.removeItemFromCart(index)
         //NOW after remove the item, I should just call method notifyItemRemoved on the callback of the state
     }
 }

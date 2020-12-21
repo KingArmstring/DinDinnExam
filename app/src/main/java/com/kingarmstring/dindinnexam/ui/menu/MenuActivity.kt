@@ -185,19 +185,3 @@ class MenuActivity : AppCompatActivity(), MenuActivityContract, HasSupportFragme
     }
 
 }
-
-/*
-Notes:
-2. Remember to create dimes file and move all hard typed values to it.
-3. Prevent fragments from navigating if the bottomsheet is collapsed and enable it if not.
-4. Add offline mode, this mode will require me to ship some images in the drawable folder.
-5. In the repository I will make filtration before returning any results but in real life app, I
-will expect that there is an option to send a query text in the request to allow me to only fetch
-MenuItems with for example type pizza, sushi or drink
-6. Write a comment on the directory structure.
-7. don't forget to dispose the observable.
- */
-
-//need glide instance in the recyclerView to load images.
-//need to listen to button clicks and touches through a callback.
-//need to change the corners of the list to sharp edges when expanded
